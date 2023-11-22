@@ -1,0 +1,29 @@
+services:
+  mqtt:
+    build: ./Mqtt
+    depends_on:
+      - "mongo"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  api:
+    build: ./Api
+    depends_on:
+      - "mongo"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 3000:80
+  # app:
+  #   build: ./Steamlit
+  #   ports:
+  #     - 8501:8501
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
