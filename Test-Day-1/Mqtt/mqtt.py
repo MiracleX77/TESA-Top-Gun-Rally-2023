@@ -13,7 +13,7 @@ from datetime import datetime
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    client.subscribe("tgr/horix")
+    client.subscribe("tgr2023/horix/evt")
     
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
@@ -55,6 +55,12 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.on_message = on_message
 
-    client.connect(host = "192.168.1.2",port= 1883,keepalive = 60,)
-    
+    client.connect(host = "192.168.1.2",port= 1883)
+    i=0
+    while True:
+        client.publish("tgr2023/horix/cmd", "Hello from python")
+        i+=1
+        if(i==1000):
+            break
+
     client.loop_forever()

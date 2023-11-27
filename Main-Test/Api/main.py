@@ -34,12 +34,17 @@ def intialize_app():
     allow_methods=["*"],
     allow_headers=["*"],
     )
+
     @app.get("/")
     def home():
         return {"message":"welcome"}
 
     from Controller.water import router as water_router
     app.include_router(water_router)
+    from Controller.predict_water import router as predict_water_router
+    app.include_router(predict_water_router)
+    from Controller.sensor import router as sensor_router
+    app.include_router(sensor_router)
     
     return app
 
@@ -47,3 +52,4 @@ app = intialize_app()
 
 if __name__ == "__main__":
     uvicorn.run(app,host="0.0.0.0",port=80)
+    #uvicorn.run(app,host="127.0.0.1",port=80)
